@@ -5,7 +5,9 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 require('dotenv').config({ path: '.env' });
 const cors = require('cors');
+
 const { sequelize } = require('./models/index'); // 시퀄라이즈
+
 const session = require('express-session');
 const MemoryStore = require('memorystore')(session);
 

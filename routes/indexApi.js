@@ -311,4 +311,75 @@ router.post('/client/create', async (req,res,next)=> {
 });
 
 
+
+
+router.get('/calendar/list', async (req,res,next)=>{
+    //usersecess 정상회원, 탈퇴회원 구분
+
+    // const usersecess = req.params.usersecess;
+    const usersecess = 0;
+    let { searchType, keyword } = req.query;
+
+    const contentSize = Number(process.env.CONTENTSIZE); // 한페이지에 나올 개수
+    const currentPage = Number(req.query.page) || 1; //현재페이
+    const { limit, offset } = getPagination(currentPage, contentSize);
+
+    keyword = keyword ? keyword : "";
+
+    let dataAll = await models.calendar.findAll({
+        // // where: {
+        // //    calendar_uid: { [Op.like]: "%" +keyword+ "%" }
+        // // },
+        // limit, offset
+    })
+
+    let dataCountAll = await models.calendar.findAndCountAll({
+    })
+
+    const pagingData = getPagingData(dataCountAll, currentPage, limit);
+
+    let cri = {searchType,keyword};
+
+    let Manager = {};
+    let Auth ={};
+    let list;
+
+    if ( dataCountAll != null){
+        res.status(200).json({
+            success : true,
+            Item: dataAll,
+            pagination: { page:pagingData.currentPage, pages:pagingData.totalPages, count:pagingData.totalItems},
+            message : "데이터 요청 성공!",
+        });
+    }else{
+        res.status(203).json({
+            success : false,
+            result: [],
+            pagination: { page:pagingData.currentPage, pages:pagingData.totalPages, count:pagingData.totalItems},
+            message : "데이터 요청 실패!",
+        });
+    }
+
+})
+
+
+
+router.post('/calendar/create', async (req,res,next)=>{
+    let { searchType, keyword } = req.query;
+
+    const contentSize = Number(process.env.CONTENTSIZE); // 한페이지에 나올 개수
+    const currentPage = Number(req.query.page) || 1; //현재페이
+    const { limit, offset } = getPagination(currentPage, contentSize);
+
+    keyword = keyword ? keyword : "";
+
+    console.log("1212121->",req.body);
+
+    const user = models.calendar.create(req.body);
+    res.status(202).json({message : '가입성공'});
+
+})
+
+
+
 module.exports = router;

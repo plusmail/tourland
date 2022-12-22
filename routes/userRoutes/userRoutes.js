@@ -9,7 +9,7 @@ const session = require('express-session');
 const MemoryStore = require('memorystore')(session);
 const {QueryTypes} = require("sequelize");
 
-const models = require("../../models");
+const models = require("../../models/index");
 const { product, airplane, tour, hotel, rentcar, pairstatus, ptourstatus, photelstatus, prentstatus } = require('../../models/index');
 
 const fs = require('fs');
