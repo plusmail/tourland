@@ -10,11 +10,6 @@ const jwt = require('jsonwebtoken');
 const { stubFalse } = require('lodash');
 const querystring = require("querystring");
 
-
-
-
-
-
 router.post('/login', async (req,res,next)=> {
     try {
         const { userid, password, remember } = req.body;

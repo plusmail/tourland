@@ -4,34 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="022f6912-a924-4b38-9214-54f3b4c729bd" name="변경" comment="패키지 여행 검색 수">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/22__12__12___10_26__________.xml" beforeDir="false" />
+    <list default="true" id="022f6912-a924-4b38-9214-54f3b4c729bd" name="변경" comment="디비 추가, Api calendar추">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/airplane.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/banner.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/cart.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/coupon.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/custboard.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/employee.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/event.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/faq.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/hotel.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/init-models.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/notice.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/planboard.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/popup.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/product.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/rentcar.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/reservation.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/review.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/tour.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/user.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/usercoupon.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/userpstatus.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/indexApi.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/indexApi.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/managerRoutes/managerRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/managerRoutes/managerRoutes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/userRoutes/userRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/userRoutes/userRoutes.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,7 +92,7 @@
       <workItem from="1670849831206" duration="13000" />
       <workItem from="1670891032381" duration="43394000" />
       <workItem from="1671175606749" duration="3046000" />
-      <workItem from="1671690993919" duration="5605000" />
+      <workItem from="1671690993919" duration="8713000" />
     </task>
     <task id="LOCAL-00001" summary="변경">
       <created>1670416532650</created>
@@ -238,7 +213,14 @@
       <option name="project" value="LOCAL" />
       <updated>1671521428928</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="디비 추가, Api calendar추">
+      <created>1671699577290</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1671699577290</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -280,7 +262,8 @@
     <MESSAGE value="indexApi수" />
     <MESSAGE value="indexApi jwt로그인 구" />
     <MESSAGE value="패키지 여행 검색 수" />
-    <option name="LAST_COMMIT_MESSAGE" value="패키지 여행 검색 수" />
+    <MESSAGE value="디비 추가, Api calendar추" />
+    <option name="LAST_COMMIT_MESSAGE" value="디비 추가, Api calendar추" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
