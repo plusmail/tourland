@@ -6,6 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="022f6912-a924-4b38-9214-54f3b4c729bd" name="변경" comment="디비 추가, Api calendar추">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/indexApi.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/indexApi.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -93,6 +95,8 @@
       <workItem from="1670891032381" duration="43394000" />
       <workItem from="1671175606749" duration="3046000" />
       <workItem from="1671690993919" duration="8713000" />
+      <workItem from="1671785720179" duration="10568000" />
+      <workItem from="1672040648775" duration="604000" />
     </task>
     <task id="LOCAL-00001" summary="변경">
       <created>1670416532650</created>
@@ -220,7 +224,14 @@
       <option name="project" value="LOCAL" />
       <updated>1671699577290</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="디비 추가, Api calendar추">
+      <created>1671785732488</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1671785732488</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -7,12 +7,13 @@ const {getPagination, getPagingData} = require("../controller/pagination");
 const {Op} = require("sequelize");
 const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
-const { stubFalse } = require('lodash');
+const {stubFalse, reject} = require('lodash');
 const querystring = require("querystring");
+const resolve = require("resolve");
 
-router.post('/login', async (req,res,next)=> {
+router.post('/login', async (req, res, next) => {
     try {
-        const { userid, password, remember } = req.body;
+        const {userid, password, remember} = req.body;
 
         // validate
         if (!userid || !password)
@@ -23,7 +24,7 @@ router.post('/login', async (req,res,next)=> {
             });
 
         const user = await models.user.findOne({
-            where : {userid: userid}
+            where: {userid: userid}
         });
         // console.log(admin);
         if (!user)
@@ -46,7 +47,7 @@ router.post('/login', async (req,res,next)=> {
                 id: user.userid,
             },
             process.env.JWT_SECRET,
-            { expiresIn: '72h' }
+            {expiresIn: '72h'}
         );
         // const result = await models.user.update(
         //     { where : {userid: user.userid} },
@@ -76,20 +77,18 @@ router.post('/login', async (req,res,next)=> {
             message: 'Successfully login user',
         });
     } catch (err) {
-        res.status(500).json({ success: false, result: null, message: err.message, error: err });
+        res.status(500).json({success: false, result: null, message: err.message, error: err});
     }
 
 });
 
 
-router.get("/logout", (req, res, next)=>{
+router.get("/logout", (req, res, next) => {
 
     req.session.destroy();
     console.log(`session을 삭제하였습니다.`);
     res.redirect("/customer");
 })
-
-
 
 
 router.get('/api/airplane/:id', async function (req, res, next) {
@@ -112,33 +111,32 @@ router.get('/api/airplane/:id', async function (req, res, next) {
 });
 
 
-
-router.get('/client/list', async (req,res,next)=>{
+router.get('/client/list', async (req, res, next) => {
     //usersecess 정상회원, 탈퇴회원 구분
 
     // const usersecess = req.params.usersecess;
     const usersecess = 0;
-    let { searchType, keyword } = req.query;
+    let {searchType, keyword} = req.query;
 
     const contentSize = Number(process.env.CONTENTSIZE); // 한페이지에 나올 개수
     const currentPage = Number(req.query.page) || 1; //현재페이
-    const { limit, offset } = getPagination(currentPage, contentSize);
+    const {limit, offset} = getPagination(currentPage, contentSize);
 
     keyword = keyword ? keyword : "";
 
     let dataAll = await models.user.findAll({
         where: {
-            [Op.and] : [
+            [Op.and]: [
                 {
                     usersecess: usersecess
                 }
             ],
             [Op.or]: [
                 {
-                    userid: { [Op.like]: "%" +keyword+ "%" }
+                    userid: {[Op.like]: "%" + keyword + "%"}
                 },
                 {
-                    username: { [Op.like]: "%" + keyword + "%" }
+                    username: {[Op.like]: "%" + keyword + "%"}
                 }
             ]
 
@@ -148,17 +146,17 @@ router.get('/client/list', async (req,res,next)=>{
 
     let dataCountAll = await models.user.findAndCountAll({
         where: {
-            [Op.and] : [
+            [Op.and]: [
                 {
                     usersecess: usersecess
                 }
             ],
             [Op.or]: [
                 {
-                    userid: { [Op.like]: "%" +keyword+ "%" }
+                    userid: {[Op.like]: "%" + keyword + "%"}
                 },
                 {
-                    username: { [Op.like]: "%" + keyword + "%" }
+                    username: {[Op.like]: "%" + keyword + "%"}
                 }
             ]
         },
@@ -167,60 +165,59 @@ router.get('/client/list', async (req,res,next)=>{
 
     const pagingData = getPagingData(dataCountAll, currentPage, limit);
 
-    let cri = {searchType,keyword};
+    let cri = {searchType, keyword};
 
     let btnName = (Boolean(Number(usersecess)) ? "회원 리스트" : "탈퇴회원 조회");
 
     console.log("usersecbtt->", pagingData)
     let Manager = {};
-    let Auth ={};
+    let Auth = {};
     let list;
 
-    if ( dataCountAll != null){
+    if (dataCountAll != null) {
         res.status(200).json({
-            success : true,
+            success: true,
             result: dataAll,
-            pagination: { page:pagingData.currentPage, pages:pagingData.totalPages, count:pagingData.totalItems},
-            message : "데이터 요청 성공!",
+            pagination: {page: pagingData.currentPage, pages: pagingData.totalPages, count: pagingData.totalItems},
+            message: "데이터 요청 성공!",
         });
-    }else{
+    } else {
         res.status(203).json({
-            success : false,
+            success: false,
             result: [],
-            pagination: { page:pagingData.currentPage, pages:pagingData.totalPages, count:pagingData.totalItems},
-            message : "데이터 요청 실패!",
+            pagination: {page: pagingData.currentPage, pages: pagingData.totalPages, count: pagingData.totalItems},
+            message: "데이터 요청 실패!",
         });
     }
 
 })
 
 
-
-router.get('/client/list/:usersecess', async (req,res,next)=>{
+router.get('/client/list/:usersecess', async (req, res, next) => {
     //usersecess 정상회원, 탈퇴회원 구분
 
     const usersecess = req.params.usersecess;
-    let { searchType, keyword } = req.query;
+    let {searchType, keyword} = req.query;
 
     const contentSize = Number(process.env.CONTENTSIZE); // 한페이지에 나올 개수
     const currentPage = Number(req.query.currentPage) || 1; //현재페이
-    const { limit, offset } = getPagination(currentPage, contentSize);
+    const {limit, offset} = getPagination(currentPage, contentSize);
 
     keyword = keyword ? keyword : "";
 
     let dataAll = await models.user.findAll({
         where: {
-            [Op.and] : [
+            [Op.and]: [
                 {
                     usersecess: usersecess
                 }
             ],
             [Op.or]: [
                 {
-                    userid: { [Op.like]: "%" +keyword+ "%" }
+                    userid: {[Op.like]: "%" + keyword + "%"}
                 },
                 {
-                    username: { [Op.like]: "%" + keyword + "%" }
+                    username: {[Op.like]: "%" + keyword + "%"}
                 }
             ]
 
@@ -230,17 +227,17 @@ router.get('/client/list/:usersecess', async (req,res,next)=>{
 
     let dataCountAll = await models.user.findAndCountAll({
         where: {
-            [Op.and] : [
+            [Op.and]: [
                 {
                     usersecess: usersecess
                 }
             ],
             [Op.or]: [
                 {
-                    userid: { [Op.like]: "%" +keyword+ "%" }
+                    userid: {[Op.like]: "%" + keyword + "%"}
                 },
                 {
-                    username: { [Op.like]: "%" + keyword + "%" }
+                    username: {[Op.like]: "%" + keyword + "%"}
                 }
             ]
         },
@@ -249,40 +246,40 @@ router.get('/client/list/:usersecess', async (req,res,next)=>{
 
     const pagingData = getPagingData(dataCountAll, currentPage, limit);
 
-    let cri = {searchType,keyword};
+    let cri = {searchType, keyword};
 
     let btnName = (Boolean(Number(usersecess)) ? "회원 리스트" : "탈퇴회원 조회");
 
     console.log("usersecbtt->", btnName)
     let Manager = {};
-    let Auth ={};
+    let Auth = {};
     let list = dataAll;
 
-    res.render("manager/user/userMngList",{cri, list, btnName, pagingData, Manager, usersecess, Auth});
+    res.render("manager/user/userMngList", {cri, list, btnName, pagingData, Manager, usersecess, Auth});
 })
 
-router.post('/client/create', async (req,res,next)=> {
+router.post('/client/create', async (req, res, next) => {
     let query;
     console.log("/client/create->", req.body);
 
     // Check if the email is already in use
     models.user.findOne({
         raw: true,
-        where : {
+        where: {
             userid: req.body.userid
         }
     }).then((result) => {
-        if(result) {
-            res.status(401).json({ message: "ID is already in use." });
+        if (result) {
+            res.status(401).json({message: "ID is already in use."});
             return;
-        }else{
+        } else {
             // Define salt rounds
             const saltRounds = 10;
             // Hash password
             let userpass;
-            if(req.body.userpass == null){
+            if (req.body.userpass == null) {
                 userpass = req.body.userid;
-            }else{
+            } else {
                 userpass = req.body.userpass;
             }
             //비밀번호 비교 구문 추가 필요
@@ -295,7 +292,7 @@ router.post('/client/create', async (req,res,next)=> {
                     "registerSuccess": true,
                     "id": user.userid
                 });
-                res.status(202).json({message : '가입성공',query : query});
+                res.status(202).json({message: '가입성공', query: query});
             });
 
         }
@@ -306,18 +303,16 @@ router.post('/client/create', async (req,res,next)=> {
 });
 
 
-
-
-router.get('/calendar/list', async (req,res,next)=>{
+router.get('/calendar/list', async (req, res, next) => {
     //usersecess 정상회원, 탈퇴회원 구분
 
     // const usersecess = req.params.usersecess;
     const usersecess = 0;
-    let { searchType, keyword } = req.query;
+    let {searchType, keyword} = req.query;
 
     const contentSize = Number(process.env.CONTENTSIZE); // 한페이지에 나올 개수
     const currentPage = Number(req.query.page) || 1; //현재페이
-    const { limit, offset } = getPagination(currentPage, contentSize);
+    const {limit, offset} = getPagination(currentPage, contentSize);
 
     keyword = keyword ? keyword : "";
 
@@ -328,53 +323,105 @@ router.get('/calendar/list', async (req,res,next)=>{
         // limit, offset
     })
 
-    let dataCountAll = await models.calendar.findAndCountAll({
-    })
+    let dataCountAll = await models.calendar.findAndCountAll({})
 
     const pagingData = getPagingData(dataCountAll, currentPage, limit);
 
-    let cri = {searchType,keyword};
+    let cri = {searchType, keyword};
 
     let Manager = {};
-    let Auth ={};
+    let Auth = {};
     let list;
 
-    if ( dataCountAll != null){
+    if (dataCountAll != null) {
         res.status(200).json({
-            success : true,
+            success: true,
             Item: dataAll,
-            pagination: { page:pagingData.currentPage, pages:pagingData.totalPages, count:pagingData.totalItems},
-            message : "데이터 요청 성공!",
+            pagination: {page: pagingData.currentPage, pages: pagingData.totalPages, count: pagingData.totalItems},
+            message: "데이터 요청 성공!",
         });
-    }else{
+    } else {
         res.status(203).json({
-            success : false,
+            success: false,
             result: [],
-            pagination: { page:pagingData.currentPage, pages:pagingData.totalPages, count:pagingData.totalItems},
-            message : "데이터 요청 실패!",
+            pagination: {page: pagingData.currentPage, pages: pagingData.totalPages, count: pagingData.totalItems},
+            message: "데이터 요청 실패!",
         });
     }
 
 })
 
 
-
-router.post('/calendar/create', async (req,res,next)=>{
-    let { searchType, keyword } = req.query;
+router.post('/calendar/create', async (req, res, next) => {
+    let {searchType, keyword} = req.query;
 
     const contentSize = Number(process.env.CONTENTSIZE); // 한페이지에 나올 개수
     const currentPage = Number(req.query.page) || 1; //현재페이
-    const { limit, offset } = getPagination(currentPage, contentSize);
+    const {limit, offset} = getPagination(currentPage, contentSize);
 
     keyword = keyword ? keyword : "";
 
-    console.log("1212121->",req.body);
+    console.log("1212121->", req.body);
 
     const user = models.calendar.create(req.body);
-    res.status(202).json({message : '가입성공'});
+    res.status(202).json({message: '가입성공'});
 
 })
 
+const getSubCategories = (id) => {
+    let dataAll = models.department.findOne({
+        raw: true,
+        attributes: ['id', 'parent_id', 'category_name', 'is_active'],
+        where: {
+            parent_id: {id}
+        },
+        // limit, offset
+    })
+
+    return dataAll;
+
+};
+
+const getSubCategoriesRecursive = async (category) => {
+    let subCategories = await models.department.findAll({
+        attributes: ['id', 'parent_id', 'category_name', 'is_active'],
+        where: {
+            parent_id: category.id
+        },
+        raw : true
+    });
+
+
+    if (subCategories.length > 0) {
+        const promises = [];
+        subCategories.forEach(category => {
+            promises.push(getSubCategoriesRecursive(category));
+        });
+        category['subCategories'] = await Promise.all(promises);
+    }
+    else category['subCategories'] = [];
+
+    console.log("11111->", category.subCategories);
+
+    return category;
+};
+
+
+router.get('/categories/list', (req, res, next) => {
+    const usersecess = 0;
+    let {searchType, keyword} = req.query;
+
+    const contentSize = Number(process.env.CONTENTSIZE); // 한페이지에 나올 개수
+    const currentPage = Number(req.query.page) || 1; //현재페이
+    const {limit, offset} = getPagination(currentPage, contentSize);
+
+    keyword = keyword ? keyword : "";
+
+    let cri = {searchType, keyword};
+    let category= {id:1};
+
+    getSubCategoriesRecursive(category);
+})
 
 
 module.exports = router;
