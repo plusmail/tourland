@@ -17,7 +17,7 @@ const querystring = require('querystring');
 const crypto = require('crypto'); //추가됐음
 const {getPagingData, getPagination} = require('../../controller/pagination');
 const {makePassword, comparePassword} = require('../../controller/passwordCheckUtil');
-
+global.Auth = {};
 
 router.get('/', async (req, res, next) => {
 
